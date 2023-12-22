@@ -67,7 +67,20 @@ pub fn one(file_path: &str) -> usize {
 /// Returns the sum of the minimum number of red, green, and blue cubes in each game multiplied
 /// together.
 pub fn two(file_path: &str) -> usize {
-    0
+    read_file(file_path)
+        .lines()
+        .map(parse_game)
+        .map(|game_data| {
+            game_data
+                .into_iter()
+                .fold(GameInfo::default(), |acc, game| GameInfo {
+                    red: acc.red.max(game.red),
+                    green: acc.green.max(game.green),
+                    blue: acc.blue.max(game.blue),
+                })
+        })
+        .map(|game| game.red * game.green * game.blue)
+        .sum()
 }
 
 #[cfg(test)]
