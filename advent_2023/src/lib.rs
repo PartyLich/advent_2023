@@ -1,6 +1,7 @@
 #![deny(missing_debug_implementations)]
 #![deny(missing_docs)]
 //! Advent of Code 2023 Solutions
+use std::ops::{Add, Sub};
 use std::{fmt, fs, ops::RangeInclusive, path::Path};
 
 use parser::three::lib::{any_of, choice, keep_first, p_char, p_int, spaces};
@@ -28,6 +29,32 @@ where
         .lines()
         .map(|line| line.chars().map(From::from).collect::<Vec<_>>())
         .collect()
+}
+
+/// Grid coordinate
+#[derive(Clone, Copy, Default, Debug, Eq, Hash, PartialEq)]
+pub struct Coord(pub isize, pub isize);
+
+impl Add for Coord {
+    type Output = Self;
+
+    fn add(self, other: Self) -> Self {
+        Self(self.0 + other.0, self.1 + other.1)
+    }
+}
+
+impl Sub for Coord {
+    type Output = Self;
+
+    fn sub(self, other: Self) -> Self {
+        Self(self.0 - other.0, self.1 - other.1)
+    }
+}
+
+impl From<(isize, isize)> for Coord {
+    fn from(value: (isize, isize)) -> Self {
+        Coord(value.0, value.1)
+    }
 }
 
 /// AoC problem solver function pointer
