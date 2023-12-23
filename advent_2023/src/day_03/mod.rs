@@ -102,6 +102,11 @@ pub fn one(file_path: &str) -> usize {
     result.iter().sum()
 }
 
+/// Returns the sum of the gear ratios.
+pub fn two(file_path: &str) -> usize {
+    0
+}
+
 #[cfg(test)]
 mod test {
     use super::*;
@@ -111,6 +116,14 @@ mod test {
         let msg = "should return ";
         let expected = 4361;
         let actual = one("input/03-t.txt");
+        assert_eq!(actual, expected, "{}", msg);
+    }
+
+    #[test]
+    fn part_two() {
+        let msg = "should return the sum of the gear ratios";
+        let expected = 467835;
+        let actual = two("input/03-t.txt");
         assert_eq!(actual, expected, "{}", msg);
     }
 }
