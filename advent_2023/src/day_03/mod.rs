@@ -1,6 +1,6 @@
 //! Solutions to 2023 day 03 problems
 //! --- Day 3: Gear Ratios ---
-use std::collections::HashSet;
+use std::collections::{HashMap, HashSet};
 
 use crate::{read_file, Coord};
 
@@ -13,8 +13,8 @@ struct Num {
 }
 
 /// Parse a schematic to locate symbols, digits, and complete numbers.
-fn parse_schematic(file: &str) -> (HashSet<Coord>, HashSet<Coord>, Vec<Num>) {
-    let mut symbols = HashSet::new();
+fn parse_schematic(file: &str) -> (HashMap<Coord, char>, HashSet<Coord>, Vec<Num>) {
+    let mut symbols = HashMap::new();
     let mut digits = HashSet::new();
     let mut numbers = Vec::new();
 
@@ -48,7 +48,7 @@ fn parse_schematic(file: &str) -> (HashSet<Coord>, HashSet<Coord>, Vec<Num>) {
                 }
                 _ => {
                     save_num(&mut start, &mut end);
-                    symbols.insert((row as isize, col as isize).into());
+                    symbols.insert((row as isize, col as isize).into(), ch);
                 }
             };
         }
@@ -65,7 +65,7 @@ pub fn one(file_path: &str) -> usize {
     let mut result = Vec::new();
 
     let (symbols, mut digits, mut numbers) = parse_schematic(&input);
-    for symbol in symbols {
+    for symbol in symbols.into_keys() {
         // check neighbors for digit
         [
             //prev row
