@@ -40,7 +40,7 @@ fn parse_game(str: &str) -> Vec<GameInfo> {
         .collect()
 }
 
-fn is_possible(max: GameInfo, game: &Vec<GameInfo>) -> bool {
+fn is_possible(max: GameInfo, game: &[GameInfo]) -> bool {
     game.iter()
         .all(|f| f.red <= max.red && f.blue <= max.blue && f.green <= max.green)
 }
