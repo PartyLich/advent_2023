@@ -45,7 +45,11 @@ static SOLUTIONS: &[Option<Solution<String>>] = &[
         (day_02::one, "Possible games"),
         (day_02::two, "Power of cubes")
     )),
-    Some(to_solution!("03-1", (day_03::one, "Part number search"))),
+    Some(to_solution!(
+        "03-1",
+        (day_03::one, "Part number search"),
+        (day_03::two, "Gear ratio sum")
+    )),
 ];
 
 /// run a single day

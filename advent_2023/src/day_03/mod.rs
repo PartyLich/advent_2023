@@ -104,7 +104,49 @@ pub fn one(file_path: &str) -> usize {
 
 /// Returns the sum of the gear ratios.
 pub fn two(file_path: &str) -> usize {
-    0
+    let input = read_file(file_path);
+    let (symbols, mut digits, mut numbers) = parse_schematic(&input);
+    symbols
+        .into_iter()
+        .filter(|(_, char)| *char == '*')
+        .map(|(coord, _)| {
+            let neighbors = [
+                //prev row
+                Coord(-1, 0),
+                Coord(-1, 1),
+                Coord(-1, -1),
+                // current row
+                Coord(0, 1),
+                Coord(0, -1),
+                // next row
+                Coord(1, -1),
+                Coord(1, 0),
+                Coord(1, 1),
+            ]
+            .into_iter()
+            .map(|offset| offset + coord)
+            .filter(|location| digits.remove(location))
+            .filter_map(|location| {
+                if let Some(idx) = numbers.iter().position(|num| {
+                    num.row == location.0 as usize
+                        && (num.start..=num.end).contains(&(location.1 as usize))
+                }) {
+                    let number = numbers.remove(idx).value;
+                    println!("    number {:?}", number);
+                    Some(number)
+                } else {
+                    None
+                }
+            })
+            .collect::<Vec<_>>();
+
+            if neighbors.len() == 2 {
+                neighbors.iter().product()
+            } else {
+                0
+            }
+        })
+        .sum()
 }
 
 #[cfg(test)]
