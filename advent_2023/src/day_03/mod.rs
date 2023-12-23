@@ -113,7 +113,7 @@ mod test {
 
     #[test]
     fn part_one() {
-        let msg = "should return ";
+        let msg = "should return the sum of the engine part numbers";
         let expected = 4361;
         let actual = one("input/03-t.txt");
         assert_eq!(actual, expected, "{}", msg);
