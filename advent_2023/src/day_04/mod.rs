@@ -39,6 +39,11 @@ pub fn one(file_path: &str) -> usize {
         .sum()
 }
 
+/// Returns the total number of scratchcards.
+pub fn two(file_path: &str) -> usize {
+    0
+}
+
 #[cfg(test)]
 mod test {
     use super::*;
@@ -48,6 +53,14 @@ mod test {
         let msg = "should return the point total of the winning cards";
         let expected = 13;
         let actual = one("input/04-t.txt");
+        assert_eq!(actual, expected, "{}", msg);
+    }
+
+    #[test]
+    fn part_two() {
+        let msg = "should return the total number of scratchcards";
+        let expected = 30;
+        let actual = two("input/04-t.txt");
         assert_eq!(actual, expected, "{}", msg);
     }
 }
