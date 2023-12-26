@@ -41,7 +41,19 @@ pub fn one(file_path: &str) -> usize {
 
 /// Returns the total number of scratchcards.
 pub fn two(file_path: &str) -> usize {
-    0
+    let win_list: Vec<_> = read_file(file_path)
+        .lines()
+        .map(parse_line)
+        .map(|(winners, have)| have.into_iter().filter(|n| winners.contains(n)).count())
+        .collect();
+    let mut cards = vec![1_usize; win_list.len()];
+    for (idx, wins) in win_list.iter().enumerate().filter(|(_idx, &n)| n > 0) {
+        for i in (idx + 1)..(idx + 1 + wins) {
+            cards[i] += cards[idx];
+        }
+    }
+
+    cards.iter().sum()
 }
 
 #[cfg(test)]
